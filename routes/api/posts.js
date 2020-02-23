@@ -129,8 +129,12 @@ router.put('/like/:id', auth, async (req, res) => {
 router.put('/unlike/:id', auth, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
-    // Check if the post has already been liked by this user
-    // if condition is to check whether the current user has already liked this post or not (can only unlike if user has already liked the post)
+    /*Check if the post has already been liked by this user
+    
+    if condition is to check whether the current user has already liked this post or not (can only unlike if user has already liked the post)
+
+    The filter() method creates an array filled with all array elements that pass a test (provided as a function).
+    */
     if (
       post.likes.filter(like => like.user.toString() === req.user.id).length ===
       0
@@ -144,8 +148,6 @@ router.put('/unlike/:id', auth, async (req, res) => {
     const removeIndex = post.likes
       .map(like => like.user.toString())
       .indexOf(req.user.id);
-    await post.save();
-    res.json(post.likes);
 
     post.likes.splice(removeIndex, 1);
 
