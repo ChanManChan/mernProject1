@@ -323,15 +323,33 @@ router.get('/github/:username', async (req, res) => {
   try {
     /* Request is designed to be the simplest way possible to make http calls. It supports HTTPS and follows redirects by default.*/
 
-    const options = {
-      uri: `https://api.github.com/users/${
-        req.params.username
-      }/repos?per_page=5&sort=created:asc&client_id=${config.get(
-        'githubClientId'
-      )}&client_secret=${config.get('githubSecret')}`,
-      method: 'GET',
-      headers: { 'user-agent': 'node.js' }
+    /* "githubClientId": "15d671a0d09f5f0e9a35",
+       "githubSecret": "0ca1f0768ae1ec5150efc3c40dbdd277e7267ae5" 
+        Above was removed from config/default.json file due to  depreciation
+
+        Along with below code which is also  depreciated
+      const options = {
+            uri: `https://api.github.com/users/${
+              req.params.username
+            }/repos?per_page=5&sort=created:asc&client_id=${config.get(
+              'githubClientId'
+            )}&client_secret=${config.get('githubSecret')}`,
+            method: 'GET',
+            headers: { 'user-agent': 'node.js' 
+       }
     };
+       */
+    const options = {
+      uri: encodeURI(
+        `https://api.github.com/users/${req.params.username}/repos?per_page=5&sort=created:asc`
+      ),
+      method: 'GET',
+      headers: {
+        'user-agent': 'node.js',
+        Authorization: `token ${config.get('githubToken')}`
+      }
+    };
+
     request(options, (error, response, body) => {
       if (error) {
         console.error(error);

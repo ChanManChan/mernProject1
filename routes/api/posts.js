@@ -80,7 +80,6 @@ router.get('/:id', auth, async (req, res) => {
 // @access  Private
 router.delete('/:id', auth, async (req, res) => {
   try {
-    // {date:-1}  <-- most recent first
     const post = await Post.findById(req.params.id);
     if (!post) {
       return res.status(404).json({ msg: 'Post not found' });
