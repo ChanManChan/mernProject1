@@ -1,0 +1,5 @@
+{
+  "mongoURI": "mongodb+srv://nandu123:nandu123@devconnector-qrqps.mongodb.net/test?retryWrites=true&w=majority",
+  "jwtSecret": "nandu'ssecrettoken",
+  "githubToken": "6626bb0989660816538cd34186f82c5b79f85818"
+}
